@@ -2,10 +2,6 @@ public class Event {
 
     private int ultimoPublish;
 
-    public Event() {
-        this.ultimoPublish = 0;
-    }
-
     public synchronized void publish() {
         this.ultimoPublish++;
         notifyAll();

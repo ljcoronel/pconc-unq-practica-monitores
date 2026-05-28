@@ -2,24 +2,14 @@ public class Secuenciador {
 
     private int proximo;
 
-    public Secuenciador() {
-        this.proximo = 0;
-    }
+    public synchronized void primero() { this.invocar(0); }
 
-    public synchronized void primero() {
-        this.invocar(0);
-    }
+    public synchronized void segundo() { this.invocar(1); }
 
-    public synchronized void segundo() {
-        this.invocar(1);
-    }
-
-    public synchronized void tercero() {
-        this.invocar(2);
-    }
+    public synchronized void tercero() { this.invocar(2); }
 
     private synchronized void invocar(int valor) {
-        while (proximo != valor) try { wait(); } catch(Exception e) { return; }
+        while (this.proximo != valor) try { wait(); } catch(Exception e) { return; }
         this.proximo = (valor + 1) % 3;
         notifyAll();
     }
