@@ -9,7 +9,7 @@ public class Secuenciador {
     public synchronized void tercero() { this.invocar(2); }
 
     private synchronized void invocar(int valor) {
-        while (this.proximo != valor) try { wait(); } catch(Exception e) { return; }
+        while (this.proximo != valor) try { wait(); } catch(InterruptedException e) { return; }
         this.proximo = (valor + 1) % 3;
         notifyAll();
     }

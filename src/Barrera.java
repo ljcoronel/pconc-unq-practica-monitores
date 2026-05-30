@@ -6,7 +6,7 @@ public class Barrera {
 
     public synchronized void esperar() {
         if (this.restantes > 0) this.restantes--;
-        while (this.restantes > 0) try { wait(); } catch(Exception e) { return; }
+        while (this.restantes > 0) try { wait(); } catch(InterruptedException e) { return; }
         notify();
     }
 }

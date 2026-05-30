@@ -9,14 +9,14 @@ public class Buffer {
     }
 
     public synchronized void producir(Object o) {
-        while (this.lleno()) try { wait(); } catch(Exception e) { return; }
+        while (this.lleno()) try { wait(); } catch(InterruptedException e) { return; }
         this.datos[this.inicio] = o;
         this.inicio = next(this.inicio);
         notifyAll();
     }
 
     public synchronized Object consumir() {
-        while (this.vacio()) try { wait(); } catch(Exception e) { return e; }
+        while (this.vacio()) try { wait(); } catch(InterruptedException e) { return e; }
         Object result = this.datos[this.fin];
         this.datos[this.fin] = null;
         this.fin = next(this.fin);

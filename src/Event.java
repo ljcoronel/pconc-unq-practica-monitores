@@ -9,7 +9,7 @@ public class Event {
 
     public synchronized void suscribe() {
         int miPublish = this.ultimoPublish + 1;
-        while (this.ultimoPublish < miPublish) try { wait(); } catch(Exception e) { return; }
+        while (this.ultimoPublish < miPublish) try { wait(); } catch(InterruptedException e) { return; }
     }
 
 }
