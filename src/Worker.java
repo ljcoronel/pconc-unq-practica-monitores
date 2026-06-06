@@ -4,6 +4,15 @@ public class Worker extends Thread {
 
     public Worker(Buffer buffer) { this.buffer = buffer; }
 
-    public void run() { while (true) ((Runnable) this.buffer.consumir()).run(); }
+    public void run() {
+        while (true) {
+            try {
+                ((Runnable) this.buffer.consumir()).run();
+            } catch(PoisonException e) {
+                System.out.println("termine");
+                return;
+            }
+        }
+    }
 
 }

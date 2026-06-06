@@ -4,6 +4,7 @@ public class ProgramaPool {
         ThreadPool pool = new ThreadPool(100, 8);
 
         for (int i = 0; i < 100; i++) pool.launch();
+        pool.stop();
     }
 
 }
