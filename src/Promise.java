@@ -1,12 +1,21 @@
-import java.util.concurrent.Future;
-
 public class Promise implements Future {
 
     private Object resultado;
     private boolean estaDisponible;
 
     public synchronized Object await() {
-        while (!this.estaDisponible) try { wait(); } catch(InterruptedException e) { return e; }
+        while (!this.estaDisponible) {
+            try {
+                wait();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        if (this.resultado instanceof Throwable) {
+            ((Throwable) this.resultado).printStackTrace();
+            return null;
+        }
         return this.resultado;
     }
 
