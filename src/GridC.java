@@ -8,7 +8,14 @@ public class GridC {
     public GridC(int n) { this.cantProductoresOciosos = n; }
 
     public synchronized void inicioConsumo() {
-        while (!this.puedeComportarseComoConsumidor()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeComportarseComoConsumidor()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantConsumidores++;
         notifyAll();
     }
@@ -19,14 +26,28 @@ public class GridC {
     }
 
     public synchronized void inicioProduccion() {
-        while (!this.puedeComportarseComoProductor()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeComportarseComoProductor()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantProductores++;
         notifyAll();
     }
 
     public synchronized void finProduccion() {
         this.cantProductoresEsperando++;
-        while (!this.puedeDejarDeProducir()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeDejarDeProducir()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantProductoresEsperando--;
         this.cantProductores--;
         notify();

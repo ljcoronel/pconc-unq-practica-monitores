@@ -5,7 +5,14 @@ public class Semaforo {
     public Semaforo(int permisosInicial) { this.permisos = permisosInicial; }
 
     public synchronized void acquire() {
-        while (this.permisos == 0) try { wait(); } catch(InterruptedException e) { return; }
+        while (this.permisos == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.permisos--;
     }
 

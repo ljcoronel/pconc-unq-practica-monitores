@@ -4,7 +4,14 @@ public class AccesoDatos {
     private int cantEscritores;
 
     public synchronized void beginRead() {
-        while (!this.puedeLeer()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeLeer()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantLectores++;
     }
 
@@ -14,7 +21,14 @@ public class AccesoDatos {
     }
 
     public synchronized void beginWrite() {
-        while (!this.puedeEscribir()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeEscribir()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantEscritores = 1;
     }
 

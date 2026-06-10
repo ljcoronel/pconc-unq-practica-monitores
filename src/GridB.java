@@ -7,7 +7,14 @@ public class GridB {
     public GridB(int n) { this.cantProductoresOciosos = n; }
 
     public synchronized void inicioConsumo() {
-        while (!this.puedeComportarseComoConsumidor()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeComportarseComoConsumidor()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantConsumidores++;
         notifyAll();
     }
@@ -18,13 +25,27 @@ public class GridB {
     }
 
     public synchronized void inicioProduccion() {
-        while (!this.puedeComportarseComoProductor()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeComportarseComoProductor()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantProductores++;
         notify();
     }
 
     public synchronized void finProduccion() {
-        while (!this.puedeDejarDeProducir()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeDejarDeProducir()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantProductores--;
         notifyAll();
     }

@@ -4,7 +4,14 @@ public class GridA {
     private int cantConsumidores;
 
     public synchronized void inicioConsumo() {
-        while (!this.puedeComportarseComoConsumidor()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeComportarseComoConsumidor()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantConsumidores++;
     }
 
@@ -19,7 +26,14 @@ public class GridA {
     }
 
     public synchronized void finProduccion() {
-        while (!this.puedeDejarDeProducir()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeDejarDeProducir()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantProductores--;
     }
 

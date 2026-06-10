@@ -5,7 +5,14 @@ public class AccesoDatosPrioridadEscritores {
     private int cantEscritoresEsperando;
 
     public synchronized void beginRead() {
-        while (!this.puedeLeer()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeLeer()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantLectores++;
     }
 
@@ -16,7 +23,14 @@ public class AccesoDatosPrioridadEscritores {
 
     public synchronized void beginWrite() {
         this.cantEscritoresEsperando++;
-        while (!this.puedeEscribir()) try { wait(); } catch(InterruptedException e) { return; }
+        while (!this.puedeEscribir()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         this.cantEscritoresEsperando--;
         this.cantEscritores = 1;
     }
