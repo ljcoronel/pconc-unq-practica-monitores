@@ -17,11 +17,11 @@ public class SalaB {
             }
         }
         this.cantAsistentes++;
-        if (this.cantAsistentes == 1) notifyAll();
+        if (this.esElPrimerAsistente()) notifyAll();
     }
 
-    public synchronized void salirSala(int numeroDeCharla) {
-        while (!this.puedeRetirarse(numeroDeCharla)) {
+    public synchronized void salirSala() {
+        while (!this.puedeRetirarse()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -51,11 +51,13 @@ public class SalaB {
         notifyAll();
     }
 
-    private boolean puedeRetirarse(int numeroDeCharla) { return !this.hayCharlaEnCurso || this.esCharlaCorrespondiente(numeroDeCharla); }
+    private boolean puedeRetirarse() { return !this.hayCharlaEnCurso; }
 
     private boolean puedeIniciarLaCharla(int numeroDeCharla) { return !this.hayCharlaEnCurso && this.hayAsistentes() && this.esCharlaCorrespondiente(numeroDeCharla); }
 
     private boolean puedeEntrar(int numeroDeCharla) { return this.hayLugar() && this.esCharlaCorrespondiente(numeroDeCharla); }
+
+    private boolean esElPrimerAsistente() { return this.cantAsistentes == 1; }
 
     private boolean hayAsistentes() { return this.cantAsistentes > 0; }
 

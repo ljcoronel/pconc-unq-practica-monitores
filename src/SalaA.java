@@ -16,7 +16,7 @@ public class SalaA {
             }
         }
         this.cantAsistentes++;
-        if (this.cantAsistentes == 1) notify();
+        if (this.esElPrimerAsistente()) notify();
     }
 
     public synchronized void salirSala() {
@@ -54,6 +54,8 @@ public class SalaA {
     private boolean puedeIniciarLaCharla() { return !this.hayCharlaEnCurso && this.hayAsistentes(); }
 
     private boolean puedeEntrar() { return this.capacidad > this.cantAsistentes; }
+
+    private boolean esElPrimerAsistente() { return this.cantAsistentes == 1; }
 
     private boolean hayAsistentes() { return this.cantAsistentes > 0; }
 
