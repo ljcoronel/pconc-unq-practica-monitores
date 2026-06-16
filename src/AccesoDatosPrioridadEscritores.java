@@ -18,7 +18,7 @@ public class AccesoDatosPrioridadEscritores {
 
     public synchronized void endRead() {
         this.cantLectores--;
-        if (this.cantLectores == 0) notify();
+        if (this.cantLectores == 0) notifyAll();
     }
 
     public synchronized void beginWrite() {
