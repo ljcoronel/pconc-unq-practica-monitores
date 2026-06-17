@@ -1,4 +1,4 @@
-public class Secuenciador {
+public class SecuenciadorTernario {
 
     private int proximo;
 
